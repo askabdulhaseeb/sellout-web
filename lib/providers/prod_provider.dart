@@ -7,6 +7,9 @@ import '../enums/product_condition.dart';
 import '../models/product.dart';
 
 class ProdProvider extends ChangeNotifier {
+  ProdProvider() {
+    _load();
+  }
   List<Product> _products = <Product>[];
 
   // filters
