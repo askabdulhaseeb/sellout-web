@@ -25,7 +25,7 @@ class ChatDashboardTile extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const ShowLoading();
           } else {
-            final AppUser _user = snapshot.data!;
+            final AppUser user = snapshot.data!;
             return ListTile(
               onTap: () {
                 // Navigator.of(context).push(
@@ -36,9 +36,9 @@ class ChatDashboardTile extends StatelessWidget {
                 // );
               },
               dense: true,
-              leading: CustomProfileImage(imageURL: _user.imageURL ?? ''),
+              leading: CustomProfileImage(imageURL: user.imageURL ?? ''),
               title: Text(
-                _user.displayName ?? 'issue',
+                user.displayName ?? 'issue',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontWeight: FontWeight.bold),

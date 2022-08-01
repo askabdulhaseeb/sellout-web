@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import '../database/auth_methods.dart';
 import '../database/product_api.dart';
@@ -31,7 +33,7 @@ class ProdProvider extends ChangeNotifier {
   void init() async {
     if (_products.isNotEmpty) return;
     await _load();
-    print('Print: product provider, No. of product: ${_products.length}');
+    log('Print: product provider, No. of product: ${_products.length}');
   }
 
   Future<void> refresh() async {

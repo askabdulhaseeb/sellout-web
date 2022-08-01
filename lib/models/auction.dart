@@ -48,7 +48,7 @@ class Auction {
   }
 
   Map<String, dynamic> updateActivity() {
-    return {
+    return <String, dynamic>{
       'is_active': isActive,
     };
   }

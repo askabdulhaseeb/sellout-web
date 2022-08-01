@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../database/chat_api.dart';
 import '../models/app_user.dart';
 import '../widgets/custom_widgets/custom_profile_image.dart';
 

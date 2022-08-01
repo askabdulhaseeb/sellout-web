@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../database/auth_methods.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/user_provider.dart';
-import '../../providers/main_bottom_nav_bar_provider.dart';
 // import '../../screens/buy_now_screen/buy_now_screen.dart';
 // import '../../screens/make_offer_screen/make_offer_screen.dart';
 // import '../../screens/message_screens/personal/product_chat_screen.dart';

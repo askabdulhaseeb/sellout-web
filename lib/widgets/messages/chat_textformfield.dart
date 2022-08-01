@@ -11,6 +11,7 @@ class ChatTestFormField extends StatefulWidget {
   final TextEditingController _text;
   final VoidCallback onSendPressed;
   @override
+  // ignore: library_private_types_in_public_api
   _ChatTestFormFieldState createState() => _ChatTestFormFieldState();
 }
 

@@ -11,6 +11,7 @@ class MessagesPersonSearch extends StatefulWidget {
   final String hint;
 
   @override
+  // ignore: library_private_types_in_public_api
   _MessagesPersonSearchState createState() => _MessagesPersonSearchState();
 }
 

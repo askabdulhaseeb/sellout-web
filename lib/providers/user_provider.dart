@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../database/auth_methods.dart';
@@ -15,7 +17,7 @@ class UserProvider extends ChangeNotifier {
         appUser: _user.firstWhere(
       (AppUser element) => element.uid == AuthMethods.uid,
     ));
-    print('App_Provider.dart: No of Users: ${_user.length}');
+    log('App_Provider.dart: No of Users: ${_user.length}');
   }
 
   void refresh() async {

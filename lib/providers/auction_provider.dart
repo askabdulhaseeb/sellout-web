@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../database/auction_api.dart';
@@ -11,7 +13,7 @@ class AuctionProvider extends ChangeNotifier {
   init() async {
     if (_auctions.isNotEmpty) return;
     await _load();
-    print('Print: Auction Provider, No. of Auction: ${_auctions.length}');
+    log('Print: Auction Provider, No. of Auction: ${_auctions.length}');
   }
 
   Future<void> refresh() async {

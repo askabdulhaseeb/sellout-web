@@ -34,6 +34,7 @@ class GenderSectionButton extends StatefulWidget {
   final void Function(GenderTypes?)? onChanged;
 
   @override
+  // ignore: library_private_types_in_public_api
   _GenderSectionButtonState createState() => _GenderSectionButtonState();
 }
 

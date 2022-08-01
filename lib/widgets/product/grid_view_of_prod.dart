@@ -1,8 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../models/product.dart';
-import '../../providers/user_provider.dart';
 // import '../../screens/product_detail_screen/product_detail_screen.dart';
 
 class GridViewOfProducts extends StatelessWidget {
@@ -43,18 +41,18 @@ class GridViewOfProducts extends StatelessWidget {
                 tag: posts[index].pid,
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
-                  child: 
-                  // posts[index].prodURL[0].isVideo
+                  child:
+                      // posts[index].prodURL[0].isVideo
                       // ? VideoWidget(
                       //     videoUrl: posts[index].prodURL[0].url,
                       //     isMute: true,
                       //     isPause: true,
                       //   )
-                      // : 
+                      // :
                       ExtendedImage.network(
-                          posts[index].prodURL[0].url,
-                          fit: BoxFit.cover,
-                        ),
+                    posts[index].prodURL[0].url,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               SizedBox(

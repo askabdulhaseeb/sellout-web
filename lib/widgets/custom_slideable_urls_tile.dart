@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
+
 import '../models/product.dart';
-import '../providers/main_bottom_nav_bar_provider.dart';
 import 'custom_widgets/custom_network_image.dart';
 
 class CustomSlidableURLsTile extends StatelessWidget {

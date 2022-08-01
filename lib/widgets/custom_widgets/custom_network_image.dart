@@ -6,20 +6,33 @@ class CustomNetworkImage extends StatelessWidget {
     required this.imageURL,
     this.fit = BoxFit.cover,
     this.timeLimit = const Duration(days: 2),
+    this.borderRadius = 0,
+    this.height,
+    this.width,
     Key? key,
   }) : super(key: key);
   final String imageURL;
   final BoxFit? fit;
   final Duration? timeLimit;
+  final double borderRadius;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
-    return ExtendedImage.network(
-      imageURL,
-      fit: fit,
-      timeLimit: timeLimit,
-      handleLoadingProgress: true,
-      cacheMaxAge: timeLimit,
+    return SizedBox(
+      height: height,
+      width: width,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: ExtendedImage.network(
+          imageURL,
+          fit: fit,
+          timeLimit: timeLimit,
+          handleLoadingProgress: true,
+          cacheMaxAge: timeLimit,
+        ),
+      ),
     );
   }
 }
