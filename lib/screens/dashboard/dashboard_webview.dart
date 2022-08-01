@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../database/auth_methods.dart';
 import '../../providers/app_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../widgets/custom_widgets/custom_network_image.dart';
+import '../dashboard_pages/app_product_page/add_product.dart';
+import '../dashboard_pages/bit_page/bit_page.dart';
+import '../dashboard_pages/chat_page/chat_page.dart';
+import '../dashboard_pages/home_page/home_page.dart';
+import '../dashboard_pages/profile_page/profile_page.dart';
 
 class DaskboardWebview extends StatelessWidget {
   const DaskboardWebview({Key? key}) : super(key: key);
-
+  static const List<Widget> _pages = <Widget>[
+    HomePage(),
+    BitPage(),
+    AddProductPage(),
+    ChatPage(),
+    ProfilePage(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +67,11 @@ class DaskboardWebview extends StatelessWidget {
             }),
           ],
         ),
+      ),
+      body: Consumer<AppProvider>(
+        builder: (BuildContext context, AppProvider appPro, _) {
+          return _pages[appPro.currentTap];
+        },
       ),
     );
   }

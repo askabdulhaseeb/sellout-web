@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/dashboard/dashboard.dart';
-import 'screens/dashboard_pages/add_product.dart';
-import 'screens/dashboard_pages/bit_page.dart';
-import 'screens/dashboard_pages/profile_page.dart';
+import 'screens/dashboard_pages/app_product_page/add_product.dart';
+import 'screens/dashboard_pages/bit_page/bit_page.dart';
+import 'screens/dashboard_pages/chat_page/chat_page.dart';
+import 'screens/dashboard_pages/home_page/home_page.dart';
+import 'screens/dashboard_pages/profile_page/profile_page.dart';
+import 'screens/error_page/error_page.dart';
 
 final GoRouter router = GoRouter(
   routes: <GoRoute>[
@@ -19,8 +22,12 @@ final GoRouter router = GoRouter(
     // Dashboard
     //
     GoRoute(
-      path: Dashboard.routeName,
+      path: '/',
       builder: (BuildContext context, GoRouterState state) => const Dashboard(),
+    ),
+    GoRoute(
+      path: HomePage.routeName,
+      builder: (BuildContext context, GoRouterState state) => const HomePage(),
     ),
     GoRoute(
       path: BitPage.routeName,
@@ -32,9 +39,16 @@ final GoRouter router = GoRouter(
           const AddProductPage(),
     ),
     GoRoute(
+      path: ChatPage.routeName,
+      builder: (BuildContext context, GoRouterState state) => const ChatPage(),
+    ),
+
+    GoRoute(
       path: ProfilePage.routeName,
       builder: (BuildContext context, GoRouterState state) =>
           const ProfilePage(),
     ),
   ],
+  errorBuilder: (BuildContext context, GoRouterState state) =>
+      const ErrorPage(),
 );
