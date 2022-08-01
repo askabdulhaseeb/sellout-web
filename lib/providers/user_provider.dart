@@ -8,15 +8,13 @@ import '../models/app_user.dart';
 import '../services/user_local_data.dart';
 
 class UserProvider extends ChangeNotifier {
-  final List<AppUser> _user = <AppUser>[];
+  List<AppUser> _user = <AppUser>[];
 
-  void init() async {
+  init() async {
+    log('User pro init ');
     if (_user.isNotEmpty) return;
-    _user.addAll(await UserAPI().getAllUsers());
-    UserLocalData().storeAppUserData(
-        appUser: _user.firstWhere(
-      (AppUser element) => element.uid == AuthMethods.uid,
-    ));
+    await _load();
+
     log('App_Provider.dart: No of Users: ${_user.length}');
   }
 
@@ -85,5 +83,15 @@ class UserProvider extends ChangeNotifier {
       index = _user.indexWhere((AppUser element) => element.uid == uid);
     }
     return index;
+  }
+
+  _load() async {
+    _user = await UserAPI().getAllUsers();
+    log('User pro len: ${_user.length} ');
+    UserLocalData().storeAppUserData(
+        appUser: _user.firstWhere(
+      (AppUser element) => element.uid == AuthMethods.uid,
+    ));
+    notifyListeners();
   }
 }

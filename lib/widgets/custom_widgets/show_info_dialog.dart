@@ -8,20 +8,23 @@ void showInfoDialog(
 }) {
   showCupertinoDialog(
     context: context,
-    builder: (BuildContext context) => CupertinoActionSheet(
-      cancelButton: CupertinoActionSheetAction(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: const Text('Go Back'),
-      ),
-      message: Text(message),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-          color: CupertinoColors.black,
+    builder: (BuildContext context) => SizedBox(
+      width: 100,
+      child: CupertinoActionSheet(
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: const Text('Go Back'),
+        ),
+        message: Text(message),
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: CupertinoColors.black,
+          ),
         ),
       ),
     ),

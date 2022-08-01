@@ -5,7 +5,7 @@ import 'chat_webview.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({Key? key}) : super(key: key);
-  static const String routeName = '/chats';
+  static const String routeName = 'chats';
 
   @override
   Widget build(BuildContext context) {

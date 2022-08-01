@@ -5,7 +5,7 @@ import 'add_product_webview.dart';
 
 class AddProductPage extends StatelessWidget {
   const AddProductPage({Key? key}) : super(key: key);
-  static const String routeName = '/add_product';
+  static const String routeName = 'add_product';
 
   @override
   Widget build(BuildContext context) {

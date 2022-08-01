@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,11 +12,14 @@ class UserAPI {
   // functions
   Future<List<AppUser>> getAllUsers() async {
     final List<AppUser> appUser = <AppUser>[];
-    final QuerySnapshot<Map<String, dynamic>> doc =
-        await _instance.collection(_collection).get();
-
-    for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
-      appUser.add(AppUser.fromDoc(element));
+    try {
+      final QuerySnapshot<Map<String, dynamic>> doc =
+          await FirebaseFirestore.instance.collection('users').get();
+      for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
+        appUser.add(AppUser.fromDoc(element));
+      }
+    } catch (e) {
+      log('ERROR - ${e.toString()}');
     }
     return appUser;
   }

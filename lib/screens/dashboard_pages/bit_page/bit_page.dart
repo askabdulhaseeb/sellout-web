@@ -5,7 +5,7 @@ import 'bit_webview.dart';
 
 class BitPage extends StatelessWidget {
   const BitPage({Key? key}) : super(key: key);
-  static const String routeName = '/bits';
+  static const String routeName = 'bits';
 
   @override
   Widget build(BuildContext context) {

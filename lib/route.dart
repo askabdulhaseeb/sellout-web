@@ -26,25 +26,24 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) => const Dashboard(),
     ),
     GoRoute(
-      path: HomePage.routeName,
+      path: '/${HomePage.routeName}',
       builder: (BuildContext context, GoRouterState state) => const HomePage(),
     ),
     GoRoute(
-      path: BitPage.routeName,
+      path: '/${BitPage.routeName}',
       builder: (BuildContext context, GoRouterState state) => const BitPage(),
     ),
     GoRoute(
-      path: AddProductPage.routeName,
+      path: '/${AddProductPage.routeName}',
       builder: (BuildContext context, GoRouterState state) =>
           const AddProductPage(),
     ),
     GoRoute(
-      path: ChatPage.routeName,
+      path: '/${ChatPage.routeName}',
       builder: (BuildContext context, GoRouterState state) => const ChatPage(),
     ),
-
     GoRoute(
-      path: ProfilePage.routeName,
+      path: '/${ProfilePage.routeName}',
       builder: (BuildContext context, GoRouterState state) =>
           const ProfilePage(),
     ),

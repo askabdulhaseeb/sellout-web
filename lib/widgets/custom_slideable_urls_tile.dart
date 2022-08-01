@@ -62,10 +62,8 @@ class _Attachment extends StatelessWidget {
             //     ),
             //   )
             // :
-            child: InteractiveViewer(
-              child: CustomNetworkImage(
-                imageURL: url.url,
-              ),
+            child: CustomNetworkImage(
+              imageURL: url.url,
             ),
           ),
           if (totalLength > 1)

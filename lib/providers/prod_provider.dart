@@ -30,7 +30,7 @@ class ProdProvider extends ChangeNotifier {
   ProdConditionEnum? get condition => _condition;
   DeliveryTypeEnum? get deliveryType => _deliveryType;
 
-  void init() async {
+  Future<void> init() async {
     if (_products.isNotEmpty) return;
     await _load();
     log('Print: product provider, No. of product: ${_products.length}');

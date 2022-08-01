@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../database/auth_methods.dart';
+import '../../functions/responsive_function.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/user_provider.dart';
@@ -24,31 +25,34 @@ class ProdPostTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppUser user =
         Provider.of<UserProvider>(context).user(uid: product.uid);
-    return Column(
-      children: <Widget>[
-        _Header(product: product, user: user),
-        GestureDetector(
-          onTap: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute<ProductDetailScreen>(
-            //     builder: (_) =>
-            //         ProductDetailScreen(product: product, user: user),
-            //   ),
-            // );
-          },
-          child: Column(
-            children: <Widget>[
-              Hero(
-                tag: product.pid,
-                child: CustomSlidableURLsTile(urls: product.prodURL),
-              ),
-              _InfoCard(product: product),
-            ],
+    return Card(
+      elevation: 5,
+      child: Column(
+        children: <Widget>[
+          _Header(product: product, user: user),
+          GestureDetector(
+            onTap: () {
+              // Navigator.of(context).push(
+              //   MaterialPageRoute<ProductDetailScreen>(
+              //     builder: (_) =>
+              //         ProductDetailScreen(product: product, user: user),
+              //   ),
+              // );
+            },
+            child: Column(
+              children: <Widget>[
+                Hero(
+                  tag: product.pid,
+                  child: CustomSlidableURLsTile(urls: product.prodURL),
+                ),
+                _InfoCard(product: product),
+              ],
+            ),
           ),
-        ),
-        _ButtonSection(user: user, product: product),
-        const SizedBox(height: 10),
-      ],
+          _ButtonSection(user: user, product: product),
+          const SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }
@@ -62,50 +66,54 @@ class _InfoCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
       child: Card(
-        child: Padding(
-          padding: EdgeInsets.all(Utilities.padding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      product.title,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+        elevation: 5,
+        child: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Padding(
+            padding: EdgeInsets.all(Utilities.padding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        product.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    Text(
+                      product.price.toString(),
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  ),
-                  Text(
-                    product.price.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 4),
-              Row(
-                children: const <Widget>[
-                  Icon(
-                    Icons.location_on,
-                    color: Colors.grey,
-                    size: 12,
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    'Location here',
-                    style: TextStyle(color: Colors.grey, fontSize: 12),
-                  )
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                product.description,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              )
-            ],
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: const <Widget>[
+                    Icon(
+                      Icons.location_on,
+                      color: Colors.grey,
+                      size: 12,
+                    ),
+                    SizedBox(width: 4),
+                    Text(
+                      'Location here',
+                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  product.description,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -128,68 +136,145 @@ class _ButtonSection extends StatelessWidget {
         ? const SizedBox()
         : Padding(
             padding: EdgeInsets.symmetric(horizontal: Utilities.padding),
-            child: Column(
-              children: <Widget>[
-                CustomElevatedButton(
-                  padding: _padding,
-                  margin: _margin,
-                  textStyle: _textStyle,
-                  title: 'Buy Now',
-                  onTap: () {
-                    if (user.displayName == null || user.displayName == '') {
-                      return;
-                    }
-                    // Navigator.of(context)
-                    //     .push(MaterialPageRoute<ProductChatScreen>(
-                    //   builder: (BuildContext context) => BuyNowScreen(
-                    //     product: product,
-                    //   ),
-                    // ));
-                  },
-                ),
-                product.acceptOffers
-                    ? CustomElevatedButton(
+            child: !ResponsiveFunctions.isMobile(context)
+                ? Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: CustomElevatedButton(
+                          padding: _padding,
+                          margin: _margin,
+                          textStyle: _textStyle,
+                          title: 'Buy Now',
+                          onTap: () {
+                            if (user.displayName == null ||
+                                user.displayName == '') {
+                              return;
+                            }
+                            // Navigator.of(context)
+                            //     .push(MaterialPageRoute<ProductChatScreen>(
+                            //   builder: (BuildContext context) => BuyNowScreen(
+                            //     product: product,
+                            //   ),
+                            // ));
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      product.acceptOffers
+                          ? Flexible(
+                              child: CustomElevatedButton(
+                                padding: _padding,
+                                margin: _margin,
+                                textStyle: _textStyle,
+                                title: 'Make Offer',
+                                onTap: () {
+                                  // Navigator.of(context)
+                                  //     .push(MaterialPageRoute<ProductChatScreen>(
+                                  //   builder: (BuildContext context) => MakeOfferScreen(
+                                  //     product: product,
+                                  //     user: user,
+                                  //   ),
+                                  // ));
+                                },
+                              ),
+                            )
+                          : const SizedBox(),
+                      const SizedBox(width: 10),
+                      Flexible(
+                        child: CustomElevatedButton(
+                          padding: _padding,
+                          margin: _margin,
+                          bgColor: Colors.transparent,
+                          border:
+                              Border.all(color: Theme.of(context).primaryColor),
+                          textStyle: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          title: 'Message Seller',
+                          onTap: () {
+                            if (user.displayName == null ||
+                                user.displayName == '') {
+                              return;
+                            }
+                            // Navigator.of(context)
+                            //     .push(MaterialPageRoute<ProductChatScreen>(
+                            //   builder: (BuildContext context) => ProductChatScreen(
+                            //     otherUser: user,
+                            //     chatID: '${AuthMethods.uid}${product.pid}',
+                            //     product: product,
+                            //   ),
+                            // ));
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    children: <Widget>[
+                      CustomElevatedButton(
                         padding: _padding,
                         margin: _margin,
                         textStyle: _textStyle,
-                        title: 'Make Offer',
+                        title: 'Buy Now',
                         onTap: () {
+                          if (user.displayName == null ||
+                              user.displayName == '') {
+                            return;
+                          }
                           // Navigator.of(context)
                           //     .push(MaterialPageRoute<ProductChatScreen>(
-                          //   builder: (BuildContext context) => MakeOfferScreen(
+                          //   builder: (BuildContext context) => BuyNowScreen(
                           //     product: product,
-                          //     user: user,
                           //   ),
                           // ));
                         },
-                      )
-                    : const SizedBox(),
-                CustomElevatedButton(
-                  padding: _padding,
-                  margin: _margin,
-                  bgColor: Colors.transparent,
-                  border: Border.all(color: Theme.of(context).primaryColor),
-                  textStyle: TextStyle(
-                    fontSize: 16,
-                    color: Theme.of(context).primaryColor,
+                      ),
+                      product.acceptOffers
+                          ? CustomElevatedButton(
+                              padding: _padding,
+                              margin: _margin,
+                              textStyle: _textStyle,
+                              title: 'Make Offer',
+                              onTap: () {
+                                // Navigator.of(context)
+                                //     .push(MaterialPageRoute<ProductChatScreen>(
+                                //   builder: (BuildContext context) => MakeOfferScreen(
+                                //     product: product,
+                                //     user: user,
+                                //   ),
+                                // ));
+                              },
+                            )
+                          : const SizedBox(),
+                      CustomElevatedButton(
+                        padding: _padding,
+                        margin: _margin,
+                        bgColor: Colors.transparent,
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                        textStyle: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        title: 'Message Seller',
+                        onTap: () {
+                          if (user.displayName == null ||
+                              user.displayName == '') {
+                            return;
+                          }
+                          // Navigator.of(context)
+                          //     .push(MaterialPageRoute<ProductChatScreen>(
+                          //   builder: (BuildContext context) => ProductChatScreen(
+                          //     otherUser: user,
+                          //     chatID: '${AuthMethods.uid}${product.pid}',
+                          //     product: product,
+                          //   ),
+                          // ));
+                        },
+                      ),
+                    ],
                   ),
-                  title: 'Message Seller',
-                  onTap: () {
-                    if (user.displayName == null || user.displayName == '') {
-                      return;
-                    }
-                    // Navigator.of(context)
-                    //     .push(MaterialPageRoute<ProductChatScreen>(
-                    //   builder: (BuildContext context) => ProductChatScreen(
-                    //     otherUser: user,
-                    //     chatID: '${AuthMethods.uid}${product.pid}',
-                    //     product: product,
-                    //   ),
-                    // ));
-                  },
-                ),
-              ],
-            ),
           );
   }
 }
