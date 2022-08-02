@@ -63,11 +63,11 @@ class UserProvider extends ChangeNotifier {
     return supporting;
   }
 
-  List<AppUser> get users => <AppUser>[..._user];
+  List<AppUser> get users => _user;
 
   AppUser user({required String uid}) {
     int index = _indexOf(uid);
-    return _user[index];
+    return index < 0 ? _null : _user[index];
   }
 
   void _fetchData(String uid) async {
@@ -78,15 +78,13 @@ class UserProvider extends ChangeNotifier {
 
   int _indexOf(String uid) {
     int index = _user.indexWhere((AppUser element) => element.uid == uid);
-    if (index < 0) {
-      _fetchData(uid);
-      index = _user.indexWhere((AppUser element) => element.uid == uid);
-    }
+    index = _user.indexWhere((AppUser element) => element.uid == uid);
     return index;
   }
 
   _load() async {
-    _user = await UserAPI().getAllUsers();
+    final List<AppUser> _temp = await UserAPI().getAllUsers();
+    _user = _temp;
     log('User pro len: ${_user.length} ');
     UserLocalData().storeAppUserData(
         appUser: _user.firstWhere(
@@ -94,4 +92,6 @@ class UserProvider extends ChangeNotifier {
     ));
     notifyListeners();
   }
+
+  AppUser get _null => AppUser(uid: '-null', displayName: 'null');
 }

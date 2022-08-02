@@ -1,9 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/app_user.dart';
 import '../../../models/product.dart';
 import '../../../providers/prod_provider.dart';
+import '../../../providers/user_provider.dart';
 import '../../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../../widgets/custom_widgets/show_loading.dart';
 import '../../../widgets/product/prod_post_tile.dart';
 
 class HomeWebview extends StatelessWidget {
@@ -21,12 +27,14 @@ class HomeWebview extends StatelessWidget {
             final List<Product> products = prodPro.products;
             return SizedBox(
               width: size.width / 2,
-              child: ListView.builder(
-                itemCount: products.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ProdPostTile(product: products[index]);
-                },
-              ),
+              child: products.isEmpty
+                  ? const ShowLoading()
+                  : ListView.builder(
+                      itemCount: products.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ProdPostTile(product: products[index]);
+                      },
+                    ),
             );
           },
         ),
@@ -49,31 +57,30 @@ class HomeWebview extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              // SizedBox(
-              //   height: size.height / 2,
-              //   width: size.width / 6,
-              //   child: Consumer<UserProvider>(
-              //       builder: (BuildContext context, UserProvider userPro, _) {
-              //     log('Userrrrr: ${userPro.users.length}');
-              //     return userPro.users.isEmpty
-              //         ? const SizedBox()
-              //         : ListView.builder(
-              //             itemCount: 10,
-              //             itemBuilder: (BuildContext context, int index) {
-              //               final AppUser user = userPro.users[index];
-              //               return ListTile(
-              //                 leading: CustomProfileImage(
-              //                     imageURL: user.imageURL ?? ''),
-              //                 title: Text(user.displayName ?? 'null'),
-              //                 trailing: CustomElevatedButton(
-              //                   title: 'Follow',
-              //                   onTap: () {},
-              //                 ),
-              //               );
-              //             },
-              //           );
-              //   }),
-              // )
+              SizedBox(
+                height: size.height / 2,
+                width: size.width / 6,
+                child: Consumer<UserProvider>(
+                    builder: (BuildContext context, UserProvider userPro, _) {
+                  return userPro.users.isEmpty
+                      ? const SizedBox()
+                      : ListView.builder(
+                          itemCount: 10,
+                          itemBuilder: (BuildContext context, int index) {
+                            final AppUser user = userPro.users[index];
+                            return ListTile(
+                              leading: CustomProfileImage(
+                                  imageURL: user.imageURL ?? ''),
+                              title: Text(user.displayName ?? 'null'),
+                              trailing: CustomElevatedButton(
+                                title: 'Follow',
+                                onTap: () {},
+                              ),
+                            );
+                          },
+                        );
+                }),
+              )
             ],
           ),
         ),

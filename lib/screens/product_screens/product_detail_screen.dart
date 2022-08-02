@@ -1,63 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../database/auth_methods.dart';
 import '../../functions/responsive_function.dart';
+import '../../functions/time_date_functions.dart';
 import '../../models/app_user.dart';
 import '../../models/product.dart';
 import '../../providers/user_provider.dart';
-// import '../../screens/buy_now_screen/buy_now_screen.dart';
-// import '../../screens/make_offer_screen/make_offer_screen.dart';
-// import '../../screens/message_screens/personal/product_chat_screen.dart';
-// import '../../screens/others_profile/others_profile.dart';
-// import '../../screens/product_detail_screen/product_detail_screen.dart';
-import '../../screens/product_screens/product_detail_screen.dart';
 import '../../utilities/utilities.dart';
-import '../custom_slideable_urls_tile.dart';
-import '../custom_widgets/custom_elevated_button.dart';
-import '../custom_widgets/custom_profile_image.dart';
-import '../custom_widgets/show_info_dialog.dart';
+import '../../widgets/custom_slideable_urls_tile.dart';
+import '../../widgets/custom_widgets/custom_elevated_button.dart';
+import '../../widgets/custom_widgets/custom_profile_image.dart';
+import '../../widgets/custom_widgets/show_info_dialog.dart';
 
-class ProdPostTile extends StatelessWidget {
-  const ProdPostTile({required this.product, Key? key}) : super(key: key);
+class ProductDetailScreen extends StatelessWidget {
+  const ProductDetailScreen({required this.product, Key? key})
+      : super(key: key);
+  static const String routeName = 'product-detail';
   final Product product;
 
   @override
   Widget build(BuildContext context) {
-    final AppUser user =
-        Provider.of<UserProvider>(context).user(uid: product.uid);
-    return Card(
-      elevation: 5,
-      child: Column(
-        children: <Widget>[
-          _Header(product: product, user: user),
-          GestureDetector(
-            onTap: () {
-              // Navigator.of(context).push(
-              //   MaterialPageRoute<ProductDetailScreen>(
-              //     builder: (_) =>
-              //         ProductDetailScreen(product: product, user: user),
-              //   ),
-              // );
-              context.goNamed(
-                ProductDetailScreen.routeName,
-                params: {'id': product.pid},
-              );
-            },
-            child: Column(
-              children: <Widget>[
-                Hero(
-                  tag: product.pid,
-                  child: CustomSlidableURLsTile(urls: product.prodURL),
-                ),
-                _InfoCard(product: product),
-              ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Center(
+          child: Card(
+            elevation: 5,
+            child: Container(
+              width: MediaQuery.of(context).size.width / 1.5,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Consumer<UserProvider>(
+                  builder: (BuildContext context, UserProvider userPro, _) {
+                final AppUser postBy = userPro.user(uid: product.uid);
+                return Column(
+                  children: <Widget>[
+                    const SizedBox(height: 10),
+                    ListTile(
+                      leading:
+                          CustomProfileImage(imageURL: postBy.imageURL ?? ''),
+                      title: Text(postBy.displayName ?? 'null'),
+                      subtitle: Text(
+                          TimeDateFunctions.timeInWords(product.timestamp!)),
+                      trailing: IconButton(
+                        onPressed: () {
+                          // TODO: Notification Seller Button click
+                          showInfoDialog(
+                            context,
+                            title: 'Next Milestone',
+                            message: 'This is a part of next milestone',
+                          );
+                        },
+                        icon: const Icon(Icons.more_vert_outlined),
+                      ),
+                    ),
+                    CustomSlidableURLsTile(urls: product.prodURL),
+                    _InfoCard(product: product),
+                    _ButtonSection(user: postBy, product: product),
+                  ],
+                );
+              }),
             ),
           ),
-          _ButtonSection(user: user, product: product),
-          const SizedBox(height: 10),
-        ],
+        ),
       ),
     );
   }
@@ -279,68 +283,5 @@ class _ButtonSection extends StatelessWidget {
                     ],
                   ),
           );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header({required this.product, required this.user, Key? key})
-      : super(key: key);
-  final Product product;
-  final AppUser user;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: Utilities.padding / 3,
-        horizontal: Utilities.padding,
-      ),
-      child: GestureDetector(
-        onTap: () {
-          // user.uid == AuthMethods.uid
-          //     ? Provider.of<AppProvider>(context, listen: false).onTabTapped(4)
-          //     : Navigator.of(context).push(
-          //         MaterialPageRoute<OthersProfile>(
-          //           builder: (BuildContext context) =>
-          //               OthersProfile(user: user),
-          //         ),
-          //       );
-        },
-        child: Row(
-          children: <Widget>[
-            CustomProfileImage(imageURL: user.imageURL ?? ''),
-            const SizedBox(width: 6),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  user.displayName ?? 'Not Found',
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  Utilities.timeInWords(product.timestamp ?? 0),
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {
-                // TODO: Notification Seller Button click
-                showInfoDialog(
-                  context,
-                  title: 'Next Milestone',
-                  message: 'This is a part of next milestone',
-                );
-              },
-              icon: const Icon(Icons.more_vert_outlined),
-            )
-          ],
-        ),
-      ),
-    );
   }
 }

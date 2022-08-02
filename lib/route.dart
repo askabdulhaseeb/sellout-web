@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'models/product.dart';
+import 'providers/prod_provider.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/dashboard/dashboard.dart';
 import 'screens/dashboard_pages/app_product_page/add_product.dart';
@@ -8,8 +11,10 @@ import 'screens/dashboard_pages/chat_page/chat_page.dart';
 import 'screens/dashboard_pages/home_page/home_page.dart';
 import 'screens/dashboard_pages/profile_page/profile_page.dart';
 import 'screens/error_page/error_page.dart';
+import 'screens/product_screens/product_detail_screen.dart';
 
 final GoRouter router = GoRouter(
+  urlPathStrategy: UrlPathStrategy.path,
   routes: <GoRoute>[
     //
     // Auth
@@ -28,6 +33,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/${HomePage.routeName}',
       builder: (BuildContext context, GoRouterState state) => const HomePage(),
+      routes: [
+        GoRoute(
+            name: ProductDetailScreen.routeName,
+            path: ':id',
+            builder: (BuildContext context, GoRouterState state) {
+              final Product _prod = Provider.of<ProdProvider>(context)
+                  .product(state.params['id'] ?? '');
+              return ProductDetailScreen(product: _prod);
+            }),
+      ],
     ),
     GoRoute(
       path: '/${BitPage.routeName}',
