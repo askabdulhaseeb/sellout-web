@@ -14,7 +14,7 @@ class UserAPI {
     final List<AppUser> appUser = <AppUser>[];
     try {
       final QuerySnapshot<Map<String, dynamic>> doc =
-          await FirebaseFirestore.instance.collection('users').get();
+          await FirebaseFirestore.instance.collection(_collection).get();
       for (DocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
         appUser.add(AppUser.fromDoc(element));
       }

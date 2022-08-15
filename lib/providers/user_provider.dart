@@ -21,10 +21,10 @@ class UserProvider extends ChangeNotifier {
   void refresh() async {
     _user.clear();
     _user.addAll(await UserAPI().getAllUsers());
-    UserLocalData().storeAppUserData(
-        appUser: _user.firstWhere(
-      (AppUser element) => element.uid == AuthMethods.uid,
-    ));
+    // UserLocalData().storeAppUserData(
+    //     appUser: _user.firstWhere(
+    //   (AppUser element) => element.uid == AuthMethods.uid,
+    // ));
   }
 
   void reset() {
@@ -85,6 +85,7 @@ class UserProvider extends ChangeNotifier {
   _load() async {
     final List<AppUser> _temp = await UserAPI().getAllUsers();
     _user = _temp;
+    notifyListeners();
     log('User pro len: ${_user.length} ');
     UserLocalData().storeAppUserData(
         appUser: _user.firstWhere(

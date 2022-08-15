@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'database/auth_methods.dart';
 import 'models/product.dart';
 import 'providers/prod_provider.dart';
 import 'screens/auth/login_screen.dart';
@@ -15,6 +16,9 @@ import 'screens/product_screens/product_detail_screen.dart';
 
 final GoRouter router = GoRouter(
   urlPathStrategy: UrlPathStrategy.path,
+  initialLocation:
+      // LoginPage.routeName,
+      AuthMethods.uid.isEmpty ? LoginPage.routeName : Dashboard.routeName,
   routes: <GoRoute>[
     //
     // Auth
@@ -27,15 +31,15 @@ final GoRouter router = GoRouter(
     // Dashboard
     //
     GoRoute(
-        path: '/',
+        path: Dashboard.routeName,
         builder: (BuildContext context, GoRouterState state) =>
             const Dashboard(),
-        routes: [
+        routes: <GoRoute>[
           GoRoute(
             path: ':${HomePage.routeName}',
             builder: (BuildContext context, GoRouterState state) =>
                 const HomePage(),
-            routes: [
+            routes: <GoRoute>[
               GoRoute(
                   name: ProductDetailScreen.routeName,
                   path: ':id',

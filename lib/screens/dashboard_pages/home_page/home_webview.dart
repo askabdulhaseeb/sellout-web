@@ -71,10 +71,15 @@ class HomeWebview extends StatelessWidget {
                             return ListTile(
                               leading: CustomProfileImage(
                                   imageURL: user.imageURL ?? ''),
-                              title: Text(user.displayName ?? 'null'),
-                              trailing: CustomElevatedButton(
-                                title: 'Follow',
-                                onTap: () {},
+                              title: Text(
+                                user.displayName ?? 'null',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                              trailing: TextButton(
+                                child: const Text('Support'),
+                                onPressed: () {},
                               ),
                             );
                           },
@@ -84,6 +89,7 @@ class HomeWebview extends StatelessWidget {
             ],
           ),
         ),
+        const SizedBox(width: 100),
       ],
     );
   }

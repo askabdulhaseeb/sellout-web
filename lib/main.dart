@@ -11,12 +11,14 @@ import 'providers/prod_provider.dart';
 import 'providers/product_category_provider.dart';
 import 'providers/user_provider.dart';
 import 'route.dart';
+import 'services/user_local_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await UserLocalData.init();
   runApp(const MyApp());
 }
 

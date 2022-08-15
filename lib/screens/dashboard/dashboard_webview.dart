@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../database/auth_methods.dart';
+import '../../models/app_user.dart';
 import '../../providers/app_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../utilities/app_images.dart';
@@ -41,27 +43,28 @@ class DaskboardWebview extends StatelessWidget {
             const _TabBarIcon(),
             Consumer<UserProvider>(
                 builder: (BuildContext context, UserProvider userPro, _) {
+              final AppUser user = userPro.user(uid: AuthMethods.uid);
               return Row(
                 children: <Widget>[
                   CustomNetworkImage(
-                    imageURL: AppImages.doneURL,
+                    imageURL: user.imageURL ?? '',
                     borderRadius: 12,
                     height: 40,
                     width: 40,
                   ),
                   const SizedBox(width: 10),
-                  const Text(
-                    'no name',
-                    style: TextStyle(fontSize: 18),
+                  Text(
+                    user.displayName ?? 'null',
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  const SizedBox(width: 16),
                   IconButton(
                     onPressed: () {},
                     icon: const Icon(
                       Icons.notifications_active,
                       size: 40,
                     ),
-                  )
+                  ),
+                  const SizedBox(width: 100),
                 ],
               );
             }),

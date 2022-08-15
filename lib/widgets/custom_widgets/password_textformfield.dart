@@ -34,6 +34,7 @@ class PasswordTextFormFieldState extends State<PasswordTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 280,
       margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -47,6 +48,7 @@ class PasswordTextFormFieldState extends State<PasswordTextFormField> {
         cursorColor: Theme.of(context).colorScheme.secondary,
         validator: (String? value) => CustomValidator.password(value),
         decoration: InputDecoration(
+          hintText: 'Password',
           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
           suffixIcon: IconButton(
             onPressed: () => setState(() {
