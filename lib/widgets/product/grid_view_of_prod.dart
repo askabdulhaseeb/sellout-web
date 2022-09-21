@@ -11,33 +11,22 @@ class GridViewOfProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
+        crossAxisCount: 5,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
       ),
       primary: false,
       shrinkWrap: true,
       itemCount: posts.length,
       itemBuilder: (BuildContext context, int index) => InkWell(
-        onTap: () {
-          // Navigator.of(context).push(
-          //   MaterialPageRoute<ProductDetailScreen>(
-          //     builder: (_) => ProductDetailScreen(
-          //       product: posts[index],
-          //       user: Provider.of<UserProvider>(context).user(
-          //         uid: posts[index].uid,
-          //       ),
-          //     ),
-          //   ),
-          // );
-        },
-        child: Container(
-          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Hero(
+        onTap: () {},
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Hero(
                 tag: posts[index].pid,
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
@@ -55,16 +44,35 @@ class GridViewOfProducts extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-                child: Text(
-                  ' ${posts[index].price} - ${posts[index].title}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(
+              height: 20,
+              child: Text(
+                posts[index].title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 18,
+                  letterSpacing: 1,
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+              child: Text(
+                '\$ ${posts[index].price}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  letterSpacing: 1,
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

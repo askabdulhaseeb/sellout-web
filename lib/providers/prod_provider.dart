@@ -46,6 +46,16 @@ class ProdProvider extends ChangeNotifier {
     return (index < 0) ? _null() : _products[index];
   }
 
+  List<Product> usersProducts(String uid) {
+    final List<Product> temp = <Product>[];
+    for (Product element in _products) {
+      if (element.uid == uid) {
+        temp.add(element);
+      }
+    }
+    return temp;
+  }
+
   onSearch(String? value) {
     _searchText = value!.toLowerCase();
     notifyListeners();

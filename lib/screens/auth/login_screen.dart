@@ -19,8 +19,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _email = TextEditingController();
-  final TextEditingController _pass = TextEditingController();
+  final TextEditingController _email =
+      TextEditingController(text: 'test@test.com');
+  final TextEditingController _pass = TextEditingController(text: '1234567890');
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   bool isLoading = false;
   @override
@@ -38,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Form(
               key: _key,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   CustomTextFormField(
                     controller: _email,
